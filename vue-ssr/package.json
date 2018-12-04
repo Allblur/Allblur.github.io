@@ -1,0 +1,70 @@
+{
+  "name": "vue-ssr",
+  "version": "1.0.0",
+  "description": "vue ssr template",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env NODE_ENV=development && node --max_old_space_size=4096 build/dev-server.js",
+    "clean": "rimraf dist",
+    "build:client": "webpack --config build/webpack.base.config",
+    "build": "npm run clean && npm run build:client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Allblur/vue-ssr.git"
+  },
+  "keywords": [
+    "vue",
+    "ssr"
+  ],
+  "author": "Allblur <douliop@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Allblur/vue-ssr/issues"
+  },
+  "homepage": "https://github.com/Allblur/vue-ssr#readme",
+  "devDependencies": {
+    "autoprefixer": "^9.3.1",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-1": "^6.24.1",
+    "connect-history-api-fallback": "^1.5.0",
+    "cross-env": "^5.2.0",
+    "css-loader": "^1.0.1",
+    "eslint": "^5.9.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-html": "^5.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "html-webpack-plugin": "^3.2.0",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "postcss": "^7.0.6",
+    "postcss-loader": "^3.0.0",
+    "rimraf": "^2.6.2",
+    "url-loader": "^1.1.2",
+    "vue-loader": "^15.4.2",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.5.17",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-middleware": "^3.4.0",
+    "webpack-hot-middleware": "^2.24.3",
+    "webpack-merge": "^4.1.4"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.2",
+    "vue-server-renderer": "^2.5.17",
+    "vuex": "^3.0.1"
+  }
+}
