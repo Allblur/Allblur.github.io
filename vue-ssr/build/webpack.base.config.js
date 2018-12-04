@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const glob = require('glob')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const {VueLoaderPlugin} = require('vue-loader')
@@ -7,8 +8,32 @@ const {VueLoaderPlugin} = require('vue-loader')
 const SCRIPTS_DEV = process.env.npm_package_scripts_dev.split(' ')[1].split('=')[1]
 const isDev = (SCRIPTS_DEV === 'development' && process.argv.length === 2) || process.env.NODE_ENV === 'development'
 
-console.log('process.argv====>>>>>', process.argv)
-console.log('process.env.NODE_ENV===>>>>', process.env.NODE_ENV)
+// console.log('process.argv====>>>>>', process.argv)
+// console.log('process.env.NODE_ENV===>>>>', process.env.NODE_ENV)
+
+/*
+	配置多页应用时获取入口文件
+	@pathArr 路径：['../app/views/*.js']
+ */
+const getEntry = function(pathArr) {
+	let entries = {}, basename, tmp, pathname;
+	if (typeof (pathArr) != "object") {
+		pathArr = [pathArr]
+	}
+	pathArr.forEach((itemPath) => {
+		glob.sync(itemPath).forEach(function (entry) {
+			basename = path.basename(entry, path.extname(entry))
+			if (entry.split('/').length > 4) {
+				tmp = entry.split('/').splice(-3)
+				pathname = tmp.splice(0, 1) + '/' + basename // 正确输出js和html的路径
+				entries[pathname] = entry
+			} else {
+				entries[basename] = entry
+			}
+		})
+	})
+	return entries
+}
 
 const webpackConfig = {
 	mode: isDev ? 'development' : 'production',
