@@ -153,7 +153,7 @@ if (isDev) {
 	})
 
 	webpackConfig.plugins.push(new ExtractTextPlugin({
-		filename: 'styles.css'//'[name].[contentHash:8].css'
+		filename: 'styles.[hash:8].css'//'[name].[contentHash:8].css'
 	}))
 }
 

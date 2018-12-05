@@ -6,9 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development && node --max_old_space_size=4096 build/dev-server.js",
-    "clean": "rimraf dist",
+    "clean:client": "rimraf dist",
+    "clean:server": "rimraf server-dist",
     "build:client": "webpack --config build/webpack.base.config",
-    "build": "npm run clean && npm run build:client"
+    "build:server": "webpack --config build/webpack.server.config",
+    "build": "npm run clean:client && npm run build:client",
+    "builds": "npm run clean:server && npm run build:server"
   },
   "repository": {
     "type": "git",
