@@ -83,6 +83,18 @@ const webpackConfig = {
 						}
 					}
 				]
+			},
+			{
+				test: /\.(woff2?|eot|ttf|otf|woff)(\?.*)?$/,
+				use: [
+					{
+						loader: 'url-loader',
+						options: {
+							limit: 10000,
+							name: 'static/[path][name].[hash:8].[ext]'
+						}
+					}
+				]
 			}
 		]
 	},

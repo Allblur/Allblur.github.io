@@ -1,0 +1,13 @@
+
+.base {
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+}
+.app {
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  color: #323232;
+  font-size: 20px;
+}

@@ -3,9 +3,11 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import createRouter from 'app/router'
 import App from './app'
+import {DatePicker} from 'element-ui'
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
+Vue.use(DatePicker)
 
 const router = createRouter()
 
