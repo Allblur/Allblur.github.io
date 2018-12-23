@@ -73,6 +73,7 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "echarts": "^4.2.0-rc.2",
     "element-ui": "^2.4.11",
     "express": "^4.16.4",
     "vue": "^2.5.17",
