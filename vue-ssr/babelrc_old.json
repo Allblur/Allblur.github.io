@@ -1,0 +1,41 @@
+{
+	"presets": [
+		"stage-1",
+		["es2015", { "modules": false }]
+	],
+	"plugins": [
+		"transform-vue-jsx",
+		"syntax-dynamic-import",
+		[
+			"component",
+			{
+				"libraryName": "element-ui",
+				"styleLibraryName": "theme-chalk"
+			}
+		]
+	],
+	"env": {
+		"browser": {
+			"presets": [
+				[
+					"env", {
+						"targets": {
+							"browsers": ["last 2 versions", "safari >= 7"]
+						}
+					}
+				]
+			]
+		},
+		"node": {
+			"presets": [
+				[
+					"env", {
+						"targets": {
+							"node": "current"
+						}
+					}
+				]
+			]
+		}
+	}
+}
