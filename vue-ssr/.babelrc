@@ -5,14 +5,7 @@
 	],
 	"plugins": [
 		"transform-vue-jsx",
-		"syntax-dynamic-import",
-		[
-			"component",
-			{
-				"libraryName": "element-ui",
-				"styleLibraryName": "theme-chalk"
-			}
-		]
+		"syntax-dynamic-import"
 	],
 	"env": {
 		"browser": {
