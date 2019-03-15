@@ -1,5 +1,6 @@
 const Home = () => import(/* webpackChunkName: "app" */ 'app/views/Home')
 const Demo = () => import(/* webpackChunkName: "app" */ 'app/views/Demo')
+const Test = () => import(/* webpackChunkName: "app" */ 'app/views/Test')
 
 const routes = [
 	{
@@ -8,6 +9,14 @@ const routes = [
 		name: 'app',
 		meta: {
 			title: 'app home page'
+		}
+	},
+	{
+		path: '/test',
+		component: Test,
+		name: 'test',
+		meta: {
+			title: 'app test page'
 		}
 	},
 	{
