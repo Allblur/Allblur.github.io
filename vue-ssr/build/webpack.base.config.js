@@ -7,6 +7,7 @@ const {VueLoaderPlugin} = require('vue-loader')
 
 const SCRIPTS_DEV = process.env.npm_package_scripts_dev.split(' ')[1].split('=')[1]
 const isDev = (SCRIPTS_DEV === 'development' && process.argv.length === 2) || process.env.NODE_ENV === 'development'
+const workspace = process.env.NODE_WORKSPACE || path.join(__dirname, '../')
 
 // console.log('process.argv====>>>>>', process.argv)
 // console.log('process.env.NODE_ENV===>>>>', process.env.NODE_ENV)
@@ -38,7 +39,8 @@ const getEntry = function(pathArr) {
 const webpackConfig = {
 	mode: isDev ? 'development' : 'production',
 	target: 'web',
-	entry: path.join(__dirname, '../app/index.js'),
+	// entry: path.join(__dirname, '../app/index.js'),
+	entry: path.resolve(workspace, './vue-ssr/app/index.js'),
 	output: {
 		filename: path.posix.join('static/scripts', '[name].[hash:8].js'),
 		chunkFilename: path.posix.join('static/scripts', '[name].[id].[hash:8].js'),
@@ -48,11 +50,16 @@ const webpackConfig = {
 	resolve: {
 	    extensions: ['.js', '.vue', '.json'],
 	    alias: {
-	      	'@': path.resolve(__dirname, '../app'),
+	    	'@': path.resolve(workspace, './vue-ssr/app'),
+	      	'server': path.resolve(workspace, './vue-ssr/server'),
+	      	'app': path.resolve(workspace, './vue-ssr/app'),
+	      	'src': path.resolve(workspace, './vue-ssr/app'),
+	      	'components': path.resolve(workspace, './vue-ssr/app/components')
+	      	/*'@': path.resolve(__dirname, '../app'),
 	      	'server': path.resolve(__dirname, '../server'),
 	      	'app': path.resolve(__dirname, '../app'),
 	      	'src': path.resolve(__dirname, '../app'),
-	      	'components': path.resolve(__dirname, '../app/components')
+	      	'components': path.resolve(__dirname, '../app/components')*/
 	    }
 	},
 	module: {
