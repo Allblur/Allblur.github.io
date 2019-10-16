@@ -1,0 +1,16 @@
+{
+  "name": "zt-table",
+  "version": "1.5.1",
+  "description": "正通表格组件",
+  "main": "index.js",
+  "scripts": {},
+  "author": "付文松",
+  "repository": {
+    "type": "git",
+    "url": "http://113.98.231.67:10003/projects/FED/repos/zt-fed-pc-common/browse/components/zt-table"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "zt-table": "^1.1.1"
+  }
+}

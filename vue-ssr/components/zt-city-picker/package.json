@@ -1,0 +1,14 @@
+{
+  "name": "zt-city-picker",
+  "version": "1.0.1",
+  "description": "省份-城市-区域联动选择器",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "邱康松",
+  "license": "ISC",
+  "dependencies": {
+    "zt-http": "^1.2.0"
+  }
+}

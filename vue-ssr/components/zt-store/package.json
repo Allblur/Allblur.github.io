@@ -1,0 +1,6 @@
+{
+  "name": "zt-store",
+  "version": "1.1.7",
+  "description": "云平台 Store",
+  "main": "index.js"
+}

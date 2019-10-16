@@ -5,12 +5,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const {VueLoaderPlugin} = require('vue-loader')
 
-const SCRIPTS_DEV = process.env.npm_package_scripts_dev.split(' ')[1].split('=')[1]
-const isDev = (SCRIPTS_DEV === 'development' && process.argv.length === 2) || process.env.NODE_ENV === 'development'
+// const SCRIPTS_DEV = process.env.npm_package_scripts_dev.split(' ')[1].split('=')[1]
+// const isDev = (SCRIPTS_DEV === 'development' && process.argv.length === 2) || process.env.NODE_ENV === 'development'
 const workspace = process.env.NODE_WORKSPACE || 'E:\\\\work' ||path.join(__dirname, '../../')
-
-// console.log('process.argv====>>>>>', process.argv)
-// console.log('process.env.NODE_ENV===>>>>', process.env.NODE_ENV)
 
 /*
 	配置多页应用时获取入口文件
@@ -35,31 +32,38 @@ const getEntry = function(pathArr) {
 	})
 	return entries
 }
+const paths = path.resolve(workspace, workspace+'/*/src/main.js');
+const entries = getEntry([paths]);
+console.log(workspace)
+console.log(entries)
+// return;
+// console.log('process.argv====>>>>>', process.argv)
+// console.log('process.env.NODE_ENV===>>>>', process.env.NODE_ENV)
 
 const webpackConfig = {
-	mode: isDev ? 'development' : 'production',
+	mode: 'development', //isDev ? 'development' : 'production',
 	target: 'web',
-	// entry: path.join(__dirname, '../app/index.js'),
-	entry: path.resolve(workspace, './vue-ssr/app/index.js'),
+	entry: entries, //path.join(__dirname, '../app/index.js'),
+	// entry: path.resolve(workspace, './vue-ssr/app/index.js'),
 	output: {
 		filename: path.posix.join('static/scripts', '[name].[hash:8].js'),
 		chunkFilename: path.posix.join('static/scripts', '[name].[id].[hash:8].js'),
-		publicPath: isDev ? '/' : 'http://www.omoideo.com',
+		publicPath: '/',//isDev ? '/' : 'http://www.omoideo.com',
 		path: path.join(__dirname, '../dist')
 	},
 	resolve: {
 	    extensions: ['.js', '.vue', '.json'],
 	    alias: {
-	    	'@': path.resolve(workspace, './vue-ssr/app'),
+	    	/* '@': path.resolve(workspace, './vue-ssr/app'),
 	      	'server': path.resolve(workspace, './vue-ssr/server'),
 	      	'app': path.resolve(workspace, './vue-ssr/app'),
 	      	'src': path.resolve(workspace, './vue-ssr/app'),
-	      	'components': path.resolve(workspace, './vue-ssr/app/components')
-	      	/*'@': path.resolve(__dirname, '../app'),
+	      	'components': path.resolve(workspace, './vue-ssr/app/components') */
+	      	'@': path.resolve(__dirname, '../app'),
 	      	'server': path.resolve(__dirname, '../server'),
 	      	'app': path.resolve(__dirname, '../app'),
 	      	'src': path.resolve(__dirname, '../app'),
-	      	'components': path.resolve(__dirname, '../app/components')*/
+	      	'components': path.resolve(__dirname, '../app/components')
 	    }
 	},
 	module: {
@@ -105,16 +109,16 @@ const webpackConfig = {
 			}
 		]
 	},
-	optimization: isDev ? {} : {
+	optimization: {}, /* isDev ? {} : {
 		splitChunks: {
 			chunks: 'all'
 		},
 		runtimeChunk: true
-	},
+	}, */
 	plugins: [
 		new webpack.DefinePlugin({
 			'process.env': {
-				NODE_ENV: isDev ? JSON.stringify('development') : JSON.stringify('production')
+				NODE_ENV: JSON.stringify('development'), //isDev ? JSON.stringify('development') : JSON.stringify('production')
 			}
 		}),
 		new HtmlWebpackPlugin({
@@ -125,7 +129,8 @@ const webpackConfig = {
 	]
 }
 
-if (isDev) {
+// if (isDev) {
+if (1) {
 	webpackConfig.module.rules.push({
 		test: /\.css$/,
 		use: ['vue-style-loader', 'css-loader']
