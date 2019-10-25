@@ -493,7 +493,7 @@
         handler(n, o) {
           let _tableData = JSON.parse(JSON.stringify(n));  //因为 splice n 的话，也会触发tableData watch
           if(!this.dRequest && this.pagination) {
-            let pageSize = this.pageSizes[0];
+            let pageSize = this.dPageSize || this.pageSizes[0];
             this.dPageSize = pageSize;
             this.dTableData = _tableData.splice((this.dCurrentPage - 1) * pageSize, pageSize);
           }else{
@@ -555,6 +555,7 @@
     },
     mounted() {
       this.setHighLightRow();
+      this.$emit('mouted');
     },
     methods: {
       //判断数据类型
@@ -654,7 +655,7 @@
       selectTableAll(selection) {
         let newSelection = this.unique(selection,this.rowKey);
         this.$emit("update:getSelection", newSelection);
-        this.$emit("select-all", newSelection);
+        this.$emit("select-all", newSelection, this.dTableData);
       },
       //勾选某一行
       selectTableRow(selection, row) {

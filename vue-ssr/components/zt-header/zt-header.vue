@@ -10,7 +10,7 @@
       <img class="icon" :src="logo"/>
     </div>
     <div class="person-info flex_cc">
-      <el-button @click="showFilterDialog" type="text" class="button__text-company">门店：<span>{{currentFours.foursName.length && dPlatform === 'group' || dPlatform === 'bi' ? currentFours.foursName[0] : currentFours.foursName}} <i v-if="dPlatform === 'group' || dPlatform === 'bi'">+{{currentFours.foursName.length}}</i></span><i class="el-icon-caret-bottom" v-if="currentFours.foursName"></i></el-button>
+      <el-button v-if="dPlatform !== 'group'" @click="showFilterDialog" type="text" class="button__text-company">门店：<span>{{currentFours.foursName.length && dPlatform === 'group' || dPlatform === 'bi' ? currentFours.foursName[0] : currentFours.foursName}} <i v-if="dPlatform === 'group' || dPlatform === 'bi'">+{{currentFours.foursName.length}}</i></span><i class="el-icon-caret-bottom" v-if="currentFours.foursName"></i></el-button>
       <el-popover
               popper-class="person-info-popover"
               placement="bottom"
@@ -74,7 +74,7 @@
     <!-- 通知弹窗 -->
     <el-dialog class="header__dialog" :title="(messageList.length || 0) + ' 条未读通知'" :close-on-click-modal="false" :close-on-press-escape="false" :visible.sync="messageDialogVisible" width="400px">
       <ul class="header__dialog-ul">
-        <li class="header__dialog-li flex_lc" v-for="item in messageList" :key="item.id" @click="goMessageDetail()">
+        <li class="header__dialog-li flex_lc" v-for="item in messageList" :key="item.id" @click="goMessageDetail(item)">
           <span :class="['icon', messageIcon[item.noticeType].color]">
             <i :class="['iconfont', messageIcon[item.noticeType].icon]"></i>
           </span>
@@ -639,7 +639,7 @@
       },
       // 跳转到对应的详情页
       goMessageDetail(item) {
-        window.location.href = `//${domain}/store/views/message#/message/detail${item.id}`;
+        window.location.href = `//${domain}/store/views/message#/message/detail/${item.id}`;
       }
     },
     filters: {

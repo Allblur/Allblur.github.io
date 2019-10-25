@@ -13,7 +13,7 @@
         placeholder="全部门店"
         size="small">
         <el-option
-          v-for="item in tableData"
+          v-for="item in tableDataInit"
           :key="item.idx"
           :label="item.shortName"
           :value="item.foursId">
@@ -25,7 +25,9 @@
       title="选择门店"
       :visible.sync="foursDialogVisible"
       width="920px"
-      :close-on-click-modal="false">
+      :close-on-click-modal="false"
+      :append-to-body="true"
+      class="zt__selectfours-dialog">
       <div class="zt__selectfours-choose">
         <span>已选择门店（{{selectionChooseList.length || 0}}）</span>
         <span class="clear" @click="clearAll"><i class="el-icon-delete"></i> 清除全部</span>
@@ -70,14 +72,6 @@
           <el-button size="small" type="primary" @click="getFourseList">查询</el-button>
           <el-button size="small" @click="resetFun">重置</el-button>
         </el-form-item>
-        <!-- <el-select size="small" class="width-min" v-model="requestParams.ordType" clearable filterable placeholder="全部订单类型">
-          <el-option
-                  v-for="item in ordTypes"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-          </el-option>
-        </el-select> -->
       </el-form>
       <el-checkbox v-model="checked" class="dialog_choose" @change="chooseAll" :disabled="!tableData.length">全部门店</el-checkbox>
       <zt-table
@@ -90,6 +84,7 @@
         @select="selectTable"
         @handleCurrentChange="handleCurrentChangeFn"
         @select-all="selectAllTable"
+        @mouted='ztTableMouted'
       >
         <!-- @select-all="selectTable" -->
       </zt-table>
@@ -106,6 +101,8 @@
 import ztTable from "zt-table";
   // import ztTable from "../zt-table";
 import ApiMixin from "./assets/js/api";
+import { stringify } from "querystring"
+import { parse } from "path"
 export default {
   mixins:[ApiMixin],
   name: 'zt-selectfours',
@@ -118,6 +115,13 @@ export default {
       default() {
         return [];
       }
+    },
+    //默认全部选中
+    initSeletedAll:{
+      type:Boolean,
+      default(){
+        return false
+      }
     }
   },
   data() {
@@ -129,6 +133,7 @@ export default {
         code: ''
       },
       tableLoading: false,
+      tableDataInit: [],
       tableData: [],
       selectionList: [],
       tableColumn: [
@@ -207,7 +212,15 @@ export default {
             item.idx = item.storeCode+item.code+(item.brandId||'').toString();
             return item;
           })
-          this.$refs.table && this.$refs.table.toggleSelection(this.selectionChooseList, 'idx');
+          if(this.tableDataInit.length < this.tableData.length) {
+            this.tableDataInit = JSON.parse(JSON.stringify(this.tableData))
+          }
+          // this.$refs.table && this.$refs.table.toggleSelection(this.selectionChooseList, 'idx');
+          if(this.initSeletedAll){
+              this.selectionChooseList = JSON.parse(JSON.stringify(this.tableData))
+              let foursIds = this.selectionChooseList.map(t => t.foursId) || [];
+              this.$emit("update:foursIds", foursIds);
+          }
           this.$nextTick(() => {
             if(this.selectionChooseList.length>0 && this.selectionChooseList.length===this.tableData.length) {
               this.checked = true;
@@ -294,6 +307,9 @@ export default {
       let foursIds = this.selectionChooseList.map(t => t.foursId) || [];
       this.$emit("update:foursIds", foursIds);
       this.foursDialogVisible = false;
+    },
+    ztTableMouted(){
+      this.$refs.table.toggleSelection(this.selectionChooseList, 'idx');
     }
   }
 }
@@ -311,7 +327,12 @@ export default {
       left: 0;
       cursor: pointer;
     }
+    .el-select .el-tag__close.el-icon-close {
+      display: none;
+    }
   }
+}
+.zt__selectfours-dialog /deep/{
   .el-dialog__body {
     padding-top: 0;
   }
@@ -342,5 +363,6 @@ export default {
       margin-right: 10px;
     }
   }
+
 }
 </style>
