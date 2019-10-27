@@ -1,0 +1,11 @@
+{
+  "name": "zt-frame-nav",
+  "version": "1.1.4",
+  "description": "PC顶部导航",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "付文松",
+  "license": "ISC"
+}
